@@ -63,7 +63,9 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
         list.style.visibilty = "visible"
      } else {
         list.style.visibilty = "hidden"
-     }
+        pilotStatus.textContent = "Pilot Ready";
+        copilotStatus.textContent = "Co-Pilot Ready";
+       }
  
 
     for (let i = 0; i < userResponses.length; i++) {
@@ -88,10 +90,11 @@ async function myFetch() {
     planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then( function(response) {
         response.json().then( function(json) {
            console.log(JSON.stringify(json));
-        })
-        });
+           let planetObjects = json.planets;
 
-    return JSON.stringify(planetsReturned);
+           return planetObjects
+    });
+});
 }
 
 function pickPlanet(planets) {
