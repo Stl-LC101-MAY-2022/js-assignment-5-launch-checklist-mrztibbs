@@ -3,8 +3,8 @@ require('isomorphic-fetch');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
    // Here is the HTML formatting for our mission target div.
-   const missionTarget = document.getElementById("missionTarget")
-   missionTarget.innerHTML = 
+   const div = document.getElementById("missionTarget");
+   div.innerHTML = 
                `<h2>Mission Destination</h2>
                 <ol>
                     <li>Name: ${name}</li>
@@ -14,7 +14,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
                     <li>Number of Moons: ${moons}</li>
                 </ol>
                 <img src="${imageUrl}">`;
-    missionTarget.style.visibilty="visible";
+    div.style.visibilty="visible";
 return
 }
 
@@ -32,16 +32,16 @@ function validateInput(needsValidation) {
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     let userResponses = [pilot, copilot, fuelLevel, cargoLevel];
-    const launchStatus = document.getElementById('launchStatus');
+    const launchStatus = document.getElementById('launchStatusCheck');
     const pilotStatus = document.getElementById('pilotStatus');
     const copilotStatus = document.getElementById('copilotStatus');
     const fuelStatus = document.getElementById('fuelStatus');
     const cargoStatus = document.getElementById('cargoStatus');
 
-    if (validateInput(pilot) === 'Is a Number' || validateInput(pilot) === 'Empty') {
-        pilotStatus.i = `Pilot ${pilot} is ready for launch`;
+    if (validateInput(pilot) !== 'Is a Number' || validateInput(pilot) !== 'Empty') {
+        pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
      }
-     if (validateInput(copilot) === 'Is a Number' || validateInput(copilot) === 'Empty') {
+     if (validateInput(copilot) !== 'Is a Number' || validateInput(copilot) !== 'Empty') {
         copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
      }
  
@@ -90,7 +90,7 @@ async function myFetch() {
     planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then( function(response) {
         response.json().then( function(json) {
            console.log(JSON.stringify(json));
-           let planetObjects = json.planets;
+           let planetObjects = JSON.stringify(json).planets;
 
            return planetObjects
     });

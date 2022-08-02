@@ -1,9 +1,9 @@
 // Write your JavaScript code here!
 
 const {validateInput, formSubmission, pickPlanet} = require("./scriptHelper.js");
-
+ fg  
 window.addEventListener("load", function() {
-   const testForm = document.querySelector("testForm");
+   const testForm = document.querySelector('[name=testForm]');
    const pilotName = document.querySelector("input[name=pilotName]");
    const copilotName = document.querySelector("input[name=copilotName]");
    const fuelLevel = document.querySelector("input[name=fuelLevel]");
@@ -20,11 +20,12 @@ window.addEventListener("load", function() {
    let listedPlanetsResponse = myFetch();
    listedPlanetsResponse.then(function (result) {
        listedPlanets = result;
-       console.log(listedPlanets);
-   listedPlanets.then(function () {
+       console.log(JSON.stringify(listedPlanets));
+   listedPlanets.then(function (json) {
       let planetArr = [];
-      try{
-       planetArr[planet] = planetObjects.map(planet => {
+      let planets = json.planets;
+      if (planets !== null){
+       planetArr = JSON.parse(JSON.stringify(planets)).map(planet => {
            planet.name,
            planet.diameter,
            planet.distance,
@@ -32,7 +33,7 @@ window.addEventListener("load", function() {
            planet.moons;
        return planet;
        });
-      } catch {};
+      }
         console.log(planetArr);
        // Below this comment call the appropriate helper functions to pick a planet fom the list of planets and add that information to your destination.
         let selectedPlanet = pickPlanet(planetArr);
@@ -44,6 +45,7 @@ window.addEventListener("load", function() {
 
    testForm.addEventListener("submit", function(event) {
     // Alert when any fields are empty.
+    formSubmission(testForm, faultyItems, pilotName, copilotName, fuelLevelInput, cargoMassInput);
     if (validateInput(pilotName) === 'Is a Number' || validateInput(pilotName) === 'Empty') {
         pilotStatus.innerHTML = `Pilot ${pilotName} is ready for launch`;
      }
@@ -67,10 +69,10 @@ window.addEventListener("load", function() {
      if (cargoMass >= 10000 || fuelLevel <= 10000) {
         launchStatus.innerHTML = 'Shuttle Not Ready for Launch';
         launchStatus.style.color = 'red';
-        faultyItems.visibility ='visible';
+        faultyItems.style.contentVisibility ='visible';
      } else {
       launchStatus.innerHTML = 'Shuttle is Ready for Launch';
-      faultyItems.visibility = 'hidden';
+      faultyItems.style.contentVisibility = 'hidden';
       pilotStatus.innerHTML = "Pilot Ready";
       copilotStatus.innerHTML = "Co-Pilot Ready";
      }
@@ -94,6 +96,5 @@ x    //To ensure text fields are only text
         return
     }
     }
-    formSubmission(testForm, faultyItems, pilotName, copilotName, fuelLevelInput, cargoMassInput);
     });
 });
