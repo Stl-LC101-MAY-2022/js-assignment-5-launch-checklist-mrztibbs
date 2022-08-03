@@ -1,6 +1,6 @@
 // Write your JavaScript code here!
 
-//const {validateInput, formSubmission, pickPlanet} = require("./scriptHelper.js");
+const {validateInput, formSubmission, pickPlanet} = require("./scriptHelper.js");
 
 window.addEventListener("load", function() {
 
@@ -20,7 +20,7 @@ window.addEventListener("load", function() {
 
 
     const list = document.getElementById("faultyItems");
-    list.style.visibility = 'hidden';
+    list.style.visibility = "hidden";
 
     const testForm = document.querySelector("form");
     testForm.addEventListener("submit", function(event) {
